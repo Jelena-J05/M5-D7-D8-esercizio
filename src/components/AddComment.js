@@ -1,34 +1,33 @@
-import { useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
-import { ArrowUpRightSquareFill} from 'react-bootstrap-icons'
-import { Rating } from 'react-simple-star-rating'
+import React, { useEffect, useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { ArrowUpRightSquareFill } from 'react-bootstrap-icons';
+import StarRatings from 'react-star-ratings';
 
 const AddComment = ({ asin }) => {
   const [comment, setComment] = useState({
     comment: '',
     rate: 0,
     elementId: null,
-  })
+  });
 
+  const [commentSent, setCommentSent] = useState(false);
 
-  const [commentSent, setCommentSent] = useState(false); 
-  
   useEffect(() => {
     setComment((c) => ({
       ...c,
       elementId: asin,
-    }))
-  }, [asin])
+    }));
+  }, [asin]);
 
-  const handleRating = (rate) => {
+  const handleRatingChange = (newRating) => {
     setComment({
       ...comment,
-      rate: rate,
-    }); 
-    };
+      rate: newRating,
+    });
+  };
 
   const sendComment = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       let response = await fetch(
         'https://striveschool-api.herokuapp.com/api/comments',
@@ -37,26 +36,26 @@ const AddComment = ({ asin }) => {
           body: JSON.stringify(comment),
           headers: {
             'Content-type': 'application/json',
-            Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTM4Mjg0ODc3Y2RhYTAwMTQ2ZGYzOTQiLCJpYXQiOjE2OTk5OTI5OTIsImV4cCI6MTcwMTIwMjU5Mn0.PBxtLZQbrMCXAg8EtZmKNb4eMKdBfYE7vytUnFNcroo",
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTM4Mjg0ODc3Y2RhYTAwMTQ2ZGYzOTQiLCJpYXQiOjE2OTk5OTI5OTIsImV4cCI6MTcwMTIwMjU5Mn0.PBxtLZQbrMCXAg8EtZmKNb4eMKdBfYE7vytUnFNcroo',
           },
         }
-      )
+      );
       if (response.ok) {
-        alert('Comment has been sent!')
-        setCommentSent(true); 
+        alert('Comment has been sent!');
+        setCommentSent(true);
         setComment({
           comment: '',
           rate: 0,
           elementId: null,
-        })
-    
-        } else {
-        throw new Error ('Please check again details you put.')
+        });
+      } else {
+        throw new Error('Please check again details you put.');
       }
     } catch (error) {
-      alert(error)
+      alert(error);
     }
-  }
+  };
 
   return (
     <div className="my-3">
@@ -78,12 +77,15 @@ const AddComment = ({ asin }) => {
         </Form.Group>
         <Form.Group>
           <Form.Label> Rating </Form.Label>
-          <section className='d-flex justify-content-center align-items-center gap-2'>
-            <Rating
-              onClick={handleRating}
-              ratingValue={comment.rate}
-              emptyColor={commentSent ? 'gray' : 'gray'} 
-              activeColor={commentSent ? 'gray' : 'gray'} 
+          <section className="d-flex justify-content-center align-items-center gap-2">
+            <StarRatings
+              rating={comment.rate}
+              starRatedColor={commentSent ? 'gray' : 'orange'}
+              starHoverColor="orange"
+              changeRating={handleRatingChange}
+              numberOfStars={5}
+              starDimension="30px"
+              starSpacing="5px"
             />
             {comment.rate}
           </section>
