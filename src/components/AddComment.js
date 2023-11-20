@@ -49,9 +49,7 @@ const AddComment = ({ asin, updateComments }) => {
           rate: 0,
           elementId: null,
         });
-        if (typeof updateComments === 'function') {
-          updateComments();
-        }     
+          updateComments();    
   
       } else {
         throw new Error('Please check again details you put.');

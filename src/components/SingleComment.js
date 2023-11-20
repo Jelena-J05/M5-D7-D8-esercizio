@@ -15,8 +15,7 @@ const SingleComment = ({ comment, updateComments }) => {
       )
       if (response.ok) {
         alert('Comment has been deleted!');
-        if (typeof updateComments === 'function') {
-          updateComments();         }
+          updateComments();
   
       } else {
         throw new Error('Comment has not been deleted!');

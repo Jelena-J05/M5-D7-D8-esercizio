@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import CommentList from './CommentList';
 import AddComment from './AddComment';
 import Loading from './Loading';
@@ -36,13 +36,7 @@ const CommentArea = ({ asin }) => {
     }
   };
 
-  useEffect(() => {
-    if (asin) {
-      getComments();
-    }
-  }, [asin]);
-
-  return (
+    return (
     <div className="text-center mb-2">
       {isLoading && <Loading />}
       {isError && <Error />}
