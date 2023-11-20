@@ -49,6 +49,10 @@ const AddComment = ({ asin }) => {
           rate: 0,
           elementId: null,
         });
+        if (typeof props.updateComments === 'function') {
+          props.updateComments();
+        }
+  
       } else {
         throw new Error('Please check again details you put.');
       }
