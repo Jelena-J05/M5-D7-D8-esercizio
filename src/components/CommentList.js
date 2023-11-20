@@ -2,13 +2,17 @@ import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 import SingleComment from './SingleComment';
 
-const CommentList = ({ commentsToShow }) => {
+const CommentList = ({ commentsToShow, updateComments }) => {
   const commentsToDisplay = [...commentsToShow];
 
   return (
     <ListGroup style={{ color: 'black' }} className="mt-2">
       {commentsToDisplay.map((comment) => (
-        <SingleComment comment={comment} key={comment._id} />
+        <SingleComment
+          comment={comment}
+          key={comment._id}
+          updateComments={updateComments}
+        />
       ))}
     </ListGroup>
   );

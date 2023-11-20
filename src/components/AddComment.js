@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { ArrowUpRightSquareFill } from 'react-bootstrap-icons';
 import StarRatings from 'react-star-ratings';
 
-const AddComment = ({ asin }) => {
+const AddComment = ({ asin, updateComments }) => {
   const [comment, setComment] = useState({
     comment: '',
     rate: 0,
@@ -49,9 +49,9 @@ const AddComment = ({ asin }) => {
           rate: 0,
           elementId: null,
         });
-        if (typeof props.updateComments === 'function') {
-          props.updateComments();
-        }
+        if (typeof updateComments === 'function') {
+          updateComments();
+        }     
   
       } else {
         throw new Error('Please check again details you put.');

@@ -1,7 +1,7 @@
 import { Button, ListGroup } from 'react-bootstrap'
 import { TrashFill } from 'react-bootstrap-icons' 
 
-const SingleComment = ({ comment }) => {
+const SingleComment = ({ comment, updateComments }) => {
   const deleteComment = async (asin) => {
     try {
       let response = await fetch(
@@ -15,6 +15,8 @@ const SingleComment = ({ comment }) => {
       )
       if (response.ok) {
         alert('Comment has been deleted!');
+        if (typeof updateComments === 'function') {
+          updateComments();         }
   
       } else {
         throw new Error('Comment has not been deleted!');
@@ -37,6 +39,5 @@ const SingleComment = ({ comment }) => {
     </ListGroup.Item>
   )
 }
-
 export default SingleComment
 
